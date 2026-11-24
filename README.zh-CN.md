@@ -2,10 +2,8 @@
 
 **面向 nextBTC 生态的开源钱包与基础设施项目。**
 
-本仓库将分阶段开源。第一阶段只发布 **nextBTC 非托管浏览器轻钱包**。
-Index Server 仍在继续开发，本次**不包含 Index Server 源码**。
 
-- 当前钱包版本：**V0.5.83 USD Special**
+- 当前钱包版本：**V0.5.83**
 - 项目许可证：**MIT**（见 [`LICENSE`](LICENSE)）
 - 钱包源码：[`wallet/nextBTC_Wallet_V0.5.83.html`](wallet/nextBTC_Wallet_V0.5.83.html)
 - English: [`README.md`](README.md)
@@ -54,7 +52,6 @@ Index Server 地址；也可以修改主应用脚本中的 `INDEX_SERVER_DEFAULT
 
 ## Index Server 依赖
 
-**本次钱包开源不包含 Index Server 源码。**
 
 钱包需要一个独立部署、且 API 与当前钱包版本兼容的 Index Server，
 用于查询链状态、地址及 UTXO、手续费建议、交易历史和广播交易。
