@@ -1,128 +1,130 @@
 # nextBTC Suite
 
-**面向 nextBTC 生态的开源钱包与区块链基础设施项目。**
+**面向 nextBTC 生态的开源钱包与基础设施项目。**
 
-nextBTC Suite 在同一个仓库中维护两个可独立部署的组件：
+本仓库将分阶段开源。第一阶段只发布 **nextBTC 非托管浏览器轻钱包**。
+Index Server 仍在继续开发，本次**不包含 Index Server 源码**。
 
-- **nextBTC Wallet**：自包含的非托管浏览器轻钱包。
-- **nextBTC Index Server**：自托管区块链索引服务、Wallet API 和双语区块浏览器。
+- 当前钱包版本：**V0.5.84 Certificate Check**
+- 项目许可证：**MIT**（见 [`LICENSE`](LICENSE)）
+- 钱包源码：[`wallet/nextBTC_Wallet_V0.5.84_CertificateCheck.html`](wallet/nextBTC_Wallet_V0.5.84_CertificateCheck.html)
+- English: [`README.md`](README.md)
+- GitHub 仓库：https://github.com/nextbtc2025/nextbtc-suite
 
-两个组件分别维护独立版本号。
+## 当前包含的功能
 
-- 钱包版本：见 [`wallet/VERSION`](wallet/VERSION)
-- Index Server 版本：见 [`indexserver/VERSION`](indexserver/VERSION)
-- 作者：**btcdage**
-- 作者主页：[btcdage2011.github.io](https://btcdage2011.github.io) / [btcdage.rf.gd](https://btcdage.rf.gd)
-- GitHub：[nextbtc2025/nextbtc-suite](https://github.com/nextbtc2025/nextbtc-suite)
-- 开源协议：[MIT](LICENSE)
+钱包以一个完整、自包含的 HTML 文件交付，不需要 Node.js 构建步骤，
+也不依赖外部 JavaScript/CSS CDN。
 
-## 项目组成
+当前版本主要功能：
 
-### nextBTC Wallet
-
-位于 `wallet/` 目录，是一个单文件浏览器钱包，可使用现代浏览器直接打开。
-
-- 非托管密钥管理与本地交易签名。
-- 本地加密多账户保险库及密码保护的钱包备份。
-- 创建钱包、导入私钥和观察钱包。
-- 支持当前 nextBTC 网络配置的 Legacy、Nested SegWit、Native SegWit 地址类型。
-- 基于 UTXO 的余额查询、交易构建、手续费选择和找零计算。
-- 交易预览与确认。
-- 默认使用本地交易备注。
-- 用户主动选择后，可通过 OP_RETURN 将备注写入链上。链上数据公开且不可撤回，并可能增加交易手续费。
-- 二维码扫描及交易数据导出。
-
-钱包需要兼容的 Index Server 提供链状态、UTXO、手续费建议、交易历史和交易广播服务。
-
-### nextBTC Index Server
-
-位于 `indexserver/` 目录，是配合已同步的 nextBTC Core 全节点使用的 Python 服务。
-
-- 将已确认区块、交易、输出、地址活动和 UTXO 状态索引到 SQLite。
-- Wallet API 与 Explorer 网页/API 分别监听，服务路由相互隔离。
-- 展示网络概览、区块、交易、地址和 Mempool 信息。
-- 提供算力、难度曲线、DWG 难度信息和高级网络统计。
-- 读取支持的 OP_RETURN 链上数据，并在交易详情中展示。
-- Explorer 支持简体中文和英文。
-- 提供数据库备份、审计、迁移、验收测试及 Windows 打包工具。
-
-部署、配置、端口和 API 说明请阅读 [`indexserver/README.md`](indexserver/README.md)。
-
-## 系统架构
-
-```text
-                         nextBTC Core
-                    RPC（默认 127.0.0.1:8554）
-                              |
-                     Indexer / Mempool
-                              |
-                         共享 SQLite
-                       /              \
-                      /                \
-             Wallet API 服务       Explorer 服务
-             127.0.0.1:8777          127.0.0.1:8778
-               钱包接口              网页及 Explorer API
-                    ^
-                    |
-              nextBTC 浏览器钱包
-```
-
-Wallet API 和 Explorer 使用独立的监听配置及路由边界，同时共享索引器、Mempool 跟踪器和数据库。默认监听地址仅供本机访问。以上是本地默认端口，不代表 FRP 映射后的公网端口。不要将 Core RPC 端口暴露到公网。
+- 浏览器端非托管钱包。
+- 本地加密多账户保险库，以及独立密码保护的钱包备份。
+- 创建钱包、导入私钥、观察钱包。
+- 支持配置的 nextBTC 网络地址类型：Legacy（P2PKH）、
+  Nested SegWit（P2SH-P2WPKH）、Native SegWit（P2WPKH）。
+- 基于 UTXO 的余额查询、交易构建、手续费选择、找零计算、本地签名，
+  并通过兼容的 Index Server 广播。
+- 交易预览与确认，显示找零输出等重要信息。
+- 可选本地交易备注。默认只保存在当前浏览器，不写入交易。
+- 用户主动勾选后，可使用 OP_RETURN 将备注写入链上。链上备注公开、
+  不可撤回，并会增加交易大小和矿工手续费。
+- 二维码扫描、签名交易 HEX 展示、复制/下载及二维码图片导出。
+- 可选美元参考估值。只有用户启用隐藏的估值显示时才需要获取行情；
+  显示值只是参考估值，不代表可成交价格。
 
 ## 快速开始
 
-### Wallet
+1. 下载 `wallet/` 目录中的钱包 HTML 文件。
+2. 使用现代浏览器打开。
+3. 创建钱包或导入已有私钥。存入资金前务必完成备份。
+4. 打开钱包的 Index Server 设置，填写你自己部署或信任的兼容 Index Server 地址。
+5. 确认网络状态和地址格式正确后，再进行转账。
 
-1. 使用现代浏览器打开 `wallet/nextBTC_Wallet.html`。
-2. 创建钱包或导入已有私钥。
-3. 存入资金前务必完成钱包备份。
-4. 在钱包设置中填写自己部署或信任的 Index Server 地址。
-5. 转账前确认网络及地址格式正确。
+公开源码将默认 Index Server 设置为保留示例地址：
 
-### Index Server
+```text
+https://your-index-server.example:8777
+```
 
-请按照 [`indexserver/README.md`](indexserver/README.md) 部署。简要来说，需要 Python 3.11、项目运行依赖，以及一个已运行并启用 RPC 的 nextBTC Core 全节点。使用 `indexserver/config.example.ini` 作为配置参考。真实凭据应保存在本地私有 `config.ini` 中，禁止提交到公开仓库。
+这是文档占位地址，不是真实可用的服务。请在钱包设置中替换为自己的
+Index Server 地址；也可以修改主应用脚本中的 `INDEX_SERVER_DEFAULT`
+常量。
 
-默认本地端口：
+远程部署建议使用 HTTPS。HTTP 仅建议用于可信的本地网络。浏览器对证书的
+处理方式取决于浏览器和服务端证书配置。
 
-| 服务 | 默认监听地址 | 用途 |
+## Index Server 依赖
+
+**本次钱包开源不包含 Index Server 源码。**
+
+钱包需要一个独立部署、且 API 与当前钱包版本兼容的 Index Server，
+用于查询链状态、地址及 UTXO、手续费建议、交易历史和广播交易。
+
+当前钱包调用以下 API：
+
+| 方法 | 路由 | 用途 |
 |---|---|---|
-| Wallet API | `127.0.0.1:8777` | 钱包接口 |
-| Explorer | `127.0.0.1:8778` | 区块浏览器网页及 API |
-| Core RPC | `127.0.0.1:8554` | 本机节点 RPC，不应暴露公网 |
+| GET | `/api/v1/status` | 网络与索引状态、安全能力声明 |
+| POST | `/api/v1/addresses/query` | 地址和 UTXO 数据 |
+| GET | `/api/v1/fees` | 手续费建议 |
+| GET | `/api/v1/history/{address}` | 地址交易历史 |
+| GET | `/api/v1/tx/{txid}` | 交易状态 |
+| POST | `/api/v1/broadcast` | 广播已签名原始交易 HEX |
 
-通过反向代理或 FRP 部署时，公网域名和端口可以不同。请按实际部署配置服务地址、CORS 和访问控制，不要假定公网端口一定是 8777 或 8778。
+发送交易时，状态响应必须声明
+`capabilities.mempool_spend_guard: true`。如果服务端没有提供该安全能力，
+钱包可能会出于安全考虑限制发送。仅路由名称相同并不代表完全兼容，
+请求/响应字段和链参数也必须匹配。
 
-## 文档
+## 网络兼容性
 
-- [系统架构](docs/architecture.md)
-- [Wallet / Index Server API 兼容说明](docs/index-server-api.md)
-- [Index Server 部署与运维](indexserver/README.md)
-- [Index Server API 参考](indexserver/API_REFERENCE_V1.0.33.md)
-- [Index Server API 矩阵](indexserver/API_MATRIX_V1.0.33.md)
-- [Index Server 数据库迁移说明](indexserver/MIGRATION_V1.0.33.md)
-- [Index Server 更新记录](indexserver/CHANGELOG_V1.0.33.md)
+本钱包针对 **nextBTC 网络**及其兼容 Index Server API 配置。
+不要假设它可以直接用于 Bitcoin 主网或其他 Bitcoin 派生网络。
+在其他链上使用前，必须独立核实地址前缀、网络参数、共识规则和服务端行为。
 
-## 安全与隐私
+## 安全说明
 
-- 私钥在浏览器本地用于地址派生和交易签名。钱包向配置的 Index Server 提交已签名交易数据用于广播。不要向 Index Server 提交 WIF、私钥或助记词。
-- Index Server 能够观察查询地址、请求时间及提交广播的已签名交易。请使用自己运营或信任的服务器。
-- 钱包数据和本地备注保存在当前浏览器配置及设备中，不会自动同步到其他设备。请单独保管加密备份。
-- OP_RETURN 链上数据公开且通常不可撤回，不要写入秘密或个人隐私。
-- Core RPC 应保持私有。不要提交 `config.ini`、RPC 凭据、私钥、生产数据库、日志或备份。
-- 对公网提供服务时，应正确配置反向代理、TLS、必要的身份验证、限流和 CORS。
-- 本项目不宣称已经通过独立专业安全审计。请先使用小额资金测试，并在签名前独立核对交易信息。
+- 私钥在浏览器本地处理，用于地址派生和交易签名。钱包向所选 Index
+  Server 提交的是已签名交易 HEX 以便广播。不要向 Index Server 或任何人
+  提交 WIF/私钥。
+- 所选 Index Server 能够观察钱包查询的地址、请求时间，以及提交广播的
+  已签名交易。请使用自己运营或信任的服务器。
+- 浏览器数据保存在当前浏览器配置和设备中。本地备注和钱包数据不会自动
+  同步到另一台电脑。
+- OP_RETURN 备注公开且交易确认后无法删除。不要在链上备注中填写密码、
+  私钥、个人隐私或其他机密信息。
+- 美元估值只是参考，可能过期或无法获取。
+- 本版本尚未经过独立专业安全审计。请先用小额资金测试，不要存放无法承受
+  损失的资金。确认交易前，应在可信的独立设备或区块浏览器核对地址和交易详情。
 
-漏洞报告方式见 [`SECURITY.md`](SECURITY.md)。
+## 目录结构
 
-## 参与贡献
+```text
+nextbtc-suite/
+├── wallet/
+│   ├── nextBTC_Wallet_V0.5.84_CertificateCheck.html
+│   ├── VERSION
+│   └── README.md
+├── docs/
+│   ├── architecture.md
+│   └── index-server-api.md
+├── LICENSE
+├── THIRD_PARTY_NOTICES.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── README.md
+└── README.zh-CN.md
+```
 
-欢迎提交 Issue 和 Pull Request。提交前请阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md)。不要在 Issue 或 Pull Request 中上传秘密信息、钱包数据或生产数据库。
+Index Server 将在开发和发布审查完成后再加入仓库。
 
-## 第三方组件
+## 许可证
 
-第三方许可和署名信息见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。仓库的 MIT 许可证不会替代或覆盖所包含第三方组件各自的许可证。
+项目采用 MIT License。请同时阅读 [`LICENSE`](LICENSE) 和
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) 中的第三方声明。
 
-## 免责声明
 
-本软件用于 nextBTC 钱包、区块链索引、API 和浏览器展示，不是托管服务，也不保证外部节点配置、网络连接或第三方基础设施始终可用。涉及共识及资产的重要信息，请结合 nextBTC Core 和可信节点数据核验。
+## 浏览器证书检查
+
+钱包的「信任证书」入口现在打开配置服务器的 `/certificate-check` 页面。浏览器允许 HTTPS 连接后，页面会提示用户返回钱包并刷新首页。钱包程序使用的 `/api/v1/status` JSON 接口保持不变。

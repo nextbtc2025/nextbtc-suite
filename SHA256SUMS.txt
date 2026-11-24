@@ -1,0 +1,1 @@
+f705ad82ff73dfd8252414af40a9cb60de61dde582277631eaf032128c8cca69  wallet/nextBTC_Wallet_V0.5.84_CertificateCheck.html

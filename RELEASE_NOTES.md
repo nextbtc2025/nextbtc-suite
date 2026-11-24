@@ -1,14 +1,13 @@
 # Release Notes
 
-## Initial combined-source publication
+## Wallet V0.5.84 Certificate Check
 
-This repository brings together the nextBTC Wallet and nextBTC Index Server source trees under one MIT-licensed project.
+Based on the user-provided V0.5.83 Wallet source.
 
-Component versions are tracked independently:
-
-- Wallet: see [`wallet/VERSION`](wallet/VERSION).
-- Index Server: see [`indexserver/VERSION`](indexserver/VERSION).
-
-The Wallet is distributed as a self-contained browser HTML application. The Index Server provides the Wallet API, Explorer web/API, SQLite indexing, Mempool integration, statistics and Windows build workflow.
-
-See the component READMEs for usage and deployment instructions. This file intentionally records repository-level scope only; component-specific changes belong in each component's changelog.
+- The Wallet's certificate-check action now opens `/certificate-check` instead
+  of exposing the raw `/api/v1/status` JSON response in the browser.
+- Passes the Wallet's selected language to the certificate page.
+- Keeps the GitHub repository link and public placeholder Index Server address.
+- No changes to transaction construction, signing, UTXO handling, fees, change,
+  local/on-chain notes, QR export, or USD valuation.
+- The Index Server source is not included in this Wallet-only public package.
