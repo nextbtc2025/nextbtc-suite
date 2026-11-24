@@ -33,9 +33,7 @@ Current wallet capabilities include:
 - Explicit opt-in OP_RETURN memo output. On-chain memos are public, irreversible,
   and increase transaction size and miner fees.
 - QR scanning, signed-transaction HEX display, copy/download, and QR image export.
-- Optional USD reference valuation. Market-price requests are only relevant when
-  the user enables the hidden valuation display; a displayed estimate is not a
-  guaranteed executable exchange price.
+
 
 ## Quick start
 
