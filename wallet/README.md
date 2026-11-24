@@ -1,13 +1,20 @@
-# nextBTC Wallet V0.5.83
+# nextBTC Wallet
 
-A self-contained browser wallet for the nextBTC network.
+**Version:** See [`VERSION`](VERSION)  
+**Author:** btcdage  
+**Project:** [nextBTC Suite](https://github.com/nextbtc2025/nextbtc-suite)  
+**License:** MIT (repository root)
 
-- Open `nextBTC_Wallet_V0.5.83.html` in a modern browser.
-- Configure your own compatible Index Server in Settings.
-- The initial server URL is intentionally a reserved placeholder:
-  `https://your-index-server.example:8777`.
-- The Index Server implementation is not included in this repository.
-- See the root README and `docs/` for API requirements and security notes.
+## Use
 
-This build is released under the repository MIT License. Third-party notices
-for the bundled QRCode generator are in `THIRD_PARTY_NOTICES.md`.
+Open `nextBTC_Wallet_V0.5.83.html` in a modern browser. Create a wallet or import an existing key, then back up the wallet before funding it.
+
+Configure an Index Server you operate or trust in Wallet settings. The default server address is a reserved example placeholder and is not a public service.
+
+See the [root README](../README.md), [architecture](../docs/architecture.md), and [API compatibility notes](../docs/index-server-api.md) for system and server information.
+
+## Security
+
+Private keys are used locally in the browser for key derivation and transaction signing. Never share WIF/private keys, seed phrases or wallet passwords. Local transaction notes remain local by default. On-chain OP_RETURN memos are public and irreversible; do not include secrets or personal information.
+
+The wallet has not been represented as having an independent professional security audit. Test with small amounts and verify transaction details before signing.
