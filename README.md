@@ -116,7 +116,7 @@ and server behavior must be independently verified before using another chain.
 ```text
 nextbtc-suite/
 ├── wallet/
-│   ├── nextBTC_Wallet_V0.5.83_USD_Special.html
+│   ├── nextBTC_Wallet_V0.5.83.html
 │   ├── VERSION
 │   └── README.md
 ├── docs/
