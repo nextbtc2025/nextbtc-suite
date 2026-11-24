@@ -1,137 +1,128 @@
 # nextBTC Suite
 
-**Open-source wallet and infrastructure for the nextBTC ecosystem.**
+**Open-source wallet and blockchain infrastructure for the nextBTC ecosystem.**
 
-This repository is being opened in stages. The first published component is the
-**nextBTC non-custodial browser wallet**. The Index Server implementation is
-still under development and is intentionally **not included** in this repository
-at this time.
+nextBTC Suite brings together two independently deployable components:
 
-- Current wallet version: **V0.5.83 USD Special**
-- License: **MIT** (see [`LICENSE`](LICENSE))
-- Wallet source: [`wallet/nextBTC_Wallet_V0.5.83.html`](wallet/nextBTC_Wallet_V0.5.83.html)
-- 中文说明: [`README.zh-CN.md`](README.zh-CN.md)
-- GitHub repository: https://github.com/nextbtc2025/nextbtc-suite
+- **nextBTC Wallet** — a self-contained, non-custodial browser wallet.
+- **nextBTC Index Server** — a self-hosted blockchain indexer, Wallet API and bilingual Explorer.
 
-## What is included
+Both components are maintained in this repository and have independent version numbers.
 
-The wallet is distributed as a single self-contained HTML file. It does not
-require a Node.js build step or external JavaScript/CSS CDN libraries.
+- Wallet version: see [`wallet/VERSION`](wallet/VERSION)
+- Index Server version: see [`indexserver/VERSION`](indexserver/VERSION)
+- Author: **btcdage**
+- Author site: [btcdage2011.github.io](https://github.com/btcdage2011/btcdage2011.github.io)
+- GitHub: [nextbtc2025/nextbtc-suite](https://github.com/nextbtc2025/nextbtc-suite)
+- License: [MIT](LICENSE)
 
-Current wallet capabilities include:
+## Components
 
-- Browser-based, non-custodial wallet workflow.
-- Local encrypted multi-account vault and password-protected portable backup.
-- Private-key import and wallet creation, plus watch-only accounts.
-- Legacy (P2PKH), Nested SegWit (P2SH-P2WPKH), and Native SegWit (P2WPKH)
-  address support for the configured nextBTC network.
-- UTXO-based balance display, transaction construction, fee selection,
-  change calculation, signing, and broadcast through a compatible Index Server.
-- Transaction preview and confirmation, including change output details.
-- Optional local transaction notes. Notes remain in the current browser and are
-  not included in the transaction by default.
-- Explicit opt-in OP_RETURN memo output. On-chain memos are public, irreversible,
-  and increase transaction size and miner fees.
-- QR scanning, signed-transaction HEX display, copy/download, and QR image export.
+### nextBTC Wallet
 
+A single-file browser wallet. Open the HTML file in `wallet/` with a modern browser.
+
+- Non-custodial key handling and local transaction signing.
+- Local encrypted multi-account vault and password-protected backup.
+- Wallet creation, private-key import and watch-only accounts.
+- Legacy, Nested SegWit and Native SegWit address formats supported by the configured nextBTC network.
+- UTXO-based balance, transaction construction, fee selection and change calculation.
+- Transaction preview and confirmation.
+- Local transaction notes by default.
+- Optional on-chain memo output through explicit OP_RETURN opt-in. On-chain data is public and irreversible and may increase transaction fees.
+- QR scanning and transaction data export.
+
+The wallet requires a compatible Index Server for chain data, UTXO queries, fee estimates, transaction history and transaction broadcast.
+
+### nextBTC Index Server
+
+A Python service designed to work with a synchronized nextBTC Core node.
+
+- Indexes confirmed blocks, transactions, outputs, address activity and UTXO state into SQLite.
+- Provides a Wallet API and a separately hosted Explorer web/API service.
+- Displays network overview, blocks, transactions, addresses and Mempool information.
+- Provides hashrate and difficulty charts, DWG difficulty information and advanced network statistics.
+- Reads supported on-chain OP_RETURN payloads for display in transaction details.
+- Simplified Chinese and English Explorer interface.
+- Database backup, audit, migration, acceptance-test and Windows packaging tools.
+
+See [`indexserver/README.md`](indexserver/README.md) for setup, configuration, ports, API references and Windows packaging.
+
+## Architecture
+
+```text
+                         nextBTC Core
+                    RPC (default 127.0.0.1:8554)
+                              |
+                     Indexer / Mempool
+                              |
+                       Shared SQLite DB
+                       /              \
+                      /                \
+          Wallet API service       Explorer service
+             127.0.0.1:8777          127.0.0.1:8778
+          wallet endpoints          Web UI + Explorer API
+                 ^
+                 |
+          nextBTC Wallet (browser)
+```
+
+The Wallet API and Explorer service use separate listening configuration and route boundaries while sharing the indexer, Mempool tracker and database. Default addresses are loopback-only. These are local defaults, not fixed public FRP ports. Do not expose the Core RPC port to the public Internet.
 
 ## Quick start
 
-1. Download the wallet HTML file from the `wallet/` directory.
-2. Open it in a modern browser.
-3. Create a wallet or import an existing key. Back up the wallet before funding it.
-4. Open the wallet's Index Server settings and enter the URL of a compatible
-   Index Server that you operate or trust.
-5. Confirm the network status and address format before sending any funds.
+### Wallet
 
-The public source intentionally uses this reserved example URL as its initial
-configuration:
+1. Open `wallet/nextBTC_Wallet_V0.5.83.html` in a modern browser.
+2. Create a wallet or import an existing key.
+3. Back up the wallet before funding it.
+4. In Wallet settings, configure the URL of an Index Server you operate or trust.
+5. Verify the network and address format before sending funds.
 
-```text
-https://your-index-server.example:8777
-```
+### Index Server
 
-This is a documentation placeholder, not a working service. Replace it with
-your own compatible Index Server URL in the wallet settings, or edit the
-`INDEX_SERVER_DEFAULT` constant near the top of the main application script.
+Follow the instructions in [`indexserver/README.md`](indexserver/README.md). In brief, the Index Server requires Python 3.11, its Python dependencies, and a running nextBTC Core node with RPC enabled. Configure it using `indexserver/config.example.ini` as a reference. Keep real credentials in a private `config.ini` and never commit that file.
 
-HTTPS is recommended for remote deployments. HTTP may be suitable only in a
-trusted local network. Browser certificate handling depends on the browser and
-the server certificate configuration.
+The default local service ports are:
 
-## Index Server requirement
-
-**The Index Server source code is not part of this first wallet release.**
-The wallet requires a separately available, API-compatible Index Server for
-chain data, UTXO queries, fee estimates, transaction history, and broadcasting.
-
-The current wallet calls these API routes:
-
-| Method | Route | Purpose |
+| Service | Default bind | Purpose |
 |---|---|---|
-| GET | `/api/v1/status` | Network and index status; spend-safety capability |
-| POST | `/api/v1/addresses/query` | Address and UTXO data |
-| GET | `/api/v1/fees` | Fee-rate suggestions |
-| GET | `/api/v1/history/{address}` | Address transaction history |
-| GET | `/api/v1/tx/{txid}` | Transaction state |
-| POST | `/api/v1/broadcast` | Broadcast signed raw transaction HEX |
+| Wallet API | `127.0.0.1:8777` | Wallet-facing API |
+| Explorer | `127.0.0.1:8778` | Explorer website and API |
+| Core RPC | `127.0.0.1:8554` | Local node RPC; do not expose publicly |
 
-For spending, the status response must advertise
-`capabilities.mempool_spend_guard: true`. If the server does not provide the
-required capability, the wallet may restrict sending for safety. Route names
-alone do not guarantee compatibility; request/response schemas and chain
-parameters must also match the wallet version.
+A reverse proxy or FRP deployment may use different public hostnames and ports. Configure the actual endpoint, CORS allow-list and access controls for the deployment; do not assume the public port is 8777 or 8778.
 
-## Network compatibility
+## Documentation
 
-This wallet is configured for the **nextBTC network** and its compatible
-Index Server API. Do not assume that it is ready for Bitcoin mainnet or another
-Bitcoin-derived network. Address prefixes, network parameters, consensus rules,
-and server behavior must be independently verified before using another chain.
+- [Architecture](docs/architecture.md)
+- [Wallet / Index Server API compatibility](docs/index-server-api.md)
+- [Index Server setup and operations](indexserver/README.md)
+- [Index Server API reference](indexserver/API_REFERENCE_V1.0.33.md)
+- [Index Server API matrix](indexserver/API_MATRIX_V1.0.33.md)
+- [Index Server migration notes](indexserver/MIGRATION_V1.0.33.md)
+- [Index Server changelog](indexserver/CHANGELOG_V1.0.33.md)
 
-## Security notes
+## Security and privacy
 
-- Private keys are handled in the browser and are used locally to derive
-  addresses and sign transactions. The wallet sends the signed transaction HEX
-  to the selected Index Server for broadcasting; never send a WIF/private key
-  to an Index Server or another person.
-- The selected Index Server can observe queried addresses, request timing, and
-  signed transactions submitted for broadcast. Use a server you operate or
-  trust.
-- Browser storage is local to the browser profile/device. Local notes and
-  wallet data do not automatically move to another computer.
-- An OP_RETURN memo is public and cannot be removed after the transaction is
-  confirmed. Do not put passwords, private keys, personal data, or confidential
-  information in an on-chain memo.
-- USD values are estimates and can be stale or unavailable.
-- This release has not undergone an independent professional security audit.
-  Test with small amounts first. Do not use it to store funds you cannot afford
-  to lose. Verify addresses and transaction details on a trusted independent
-  device or explorer before confirming.
+- Private keys are handled in the browser for key derivation and signing. The wallet submits signed transaction data to the configured Index Server for broadcast. Never send a WIF/private key or seed phrase to an Index Server.
+- An Index Server can observe queried addresses, request timing and signed transactions submitted for broadcast. Use a server you operate or trust.
+- Wallet data and local notes are stored in the browser profile/device and are not automatically synchronized between devices. Maintain encrypted backups.
+- On-chain OP_RETURN data is public and generally irreversible. Do not include secrets or personal information.
+- Keep Core RPC private. Do not commit `config.ini`, RPC credentials, private keys, production databases, logs or backups.
+- When exposing services publicly, configure an appropriate reverse proxy, TLS, authentication where applicable, rate limits and CORS.
+- The software has not been represented as having an independent professional security audit. Test with small amounts and independently verify transaction details before signing.
 
-## Repository layout
+See [`SECURITY.md`](SECURITY.md) for vulnerability reporting guidance.
 
-```text
-nextbtc-suite/
-├── wallet/
-│   ├── nextBTC_Wallet_V0.5.83.html
-│   ├── VERSION
-│   └── README.md
-├── docs/
-│   ├── architecture.md
-│   └── index-server-api.md
-├── LICENSE
-├── THIRD_PARTY_NOTICES.md
-├── CONTRIBUTING.md
-├── SECURITY.md
-├── README.md
-└── README.zh-CN.md
-```
+## Contributing
 
-The Index Server will be added only after its development and release review
-are complete.
+Issues and pull requests are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before submitting changes. Never include secrets, wallet data or production databases in issues or pull requests.
 
-## License
+## Third-party components
 
-The project is released under the MIT License. See [`LICENSE`](LICENSE) and
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for third-party notices.
+Third-party license and attribution information is collected in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). The repository MIT license does not replace or override licenses of bundled third-party components.
+
+## Disclaimer
+
+This software is provided for nextBTC wallet, indexing, API and Explorer purposes. It is not a hosted custody service and does not guarantee external node configuration, network availability or third-party infrastructure. Verify consensus-sensitive and financial information against nextBTC Core and trusted node data.

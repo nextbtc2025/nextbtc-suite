@@ -1,48 +1,55 @@
-# Wallet Architecture
+# nextBTC Suite Architecture
 
-## Overview
+## Components
 
-The wallet is a single-file browser application. Its HTML contains the UI,
-styles, application logic, cryptographic utilities, transaction builder,
-encrypted vault, backup functions, localization, and bundled QR generation.
+nextBTC Suite contains two independently versioned and deployable components:
 
-There is no wallet backend in this repository. Chain data and transaction
-broadcasting are provided by a separately operated compatible Index Server.
+- **Wallet** (`wallet/`): a self-contained browser application. UI, cryptographic utilities, transaction construction, signing, encrypted local vault, backup, localization and QR support are packaged in one HTML file.
+- **Index Server** (`indexserver/`): a Python service that connects to nextBTC Core, indexes chain data into SQLite, tracks Mempool information, and exposes separate Wallet API and Explorer HTTP services.
 
-## Main components
+## Service topology
 
-- **UI and navigation:** wallet pages, dialogs, notifications, settings, and
-  responsive controls.
-- **WIF/address utilities:** key import/generation and nextBTC address derivation.
-- **Transaction engine:** UTXO selection, transaction serialization, fee and
-  change calculation, deterministic ECDSA signing, and optional OP_RETURN output.
-- **Encrypted vault:** local multi-account storage and unlock/session handling.
-- **Portable backup:** independently password-protected wallet backup.
-- **QR support:** address/transaction display and QR scanning using the bundled
-  QRCode for JavaScript implementation.
-- **Localization:** Chinese and English UI text.
+```text
+Browser
+  |
+  +---- nextBTC Wallet (local HTML)
+  |          |
+  |          +---- Wallet API :8777
+  |
+  +---- Explorer UI :8778
+                 |
+             Explorer API
+                 |
+       Shared Indexer / Mempool
+                 |
+             SQLite DB
+                 |
+          nextBTC Core RPC :8554
+```
 
-## Data flow
+The Wallet API and Explorer service have separate listeners and route boundaries. They share indexing and database infrastructure. Default binds are loopback addresses; deployments using a reverse proxy or FRP may map different public hosts and ports.
 
-1. The browser loads the wallet file.
-2. The user configures an Index Server URL.
-3. The wallet queries status, addresses, UTXOs, fees, and history from that
-   server.
-4. Private keys remain in the browser for key derivation and transaction signing.
-5. The wallet submits the signed raw transaction HEX to the configured server
-   for broadcast.
+## Wallet data flow
 
+1. The browser loads the wallet HTML.
+2. The user configures an Index Server endpoint.
+3. The wallet queries network status, addresses, UTXOs, fee estimates and transaction history.
+4. Private keys remain in the browser for key derivation and signing.
+5. The wallet submits signed raw transaction data to the configured server for broadcast.
+6. Local transaction notes remain local by default. An OP_RETURN memo is included only after explicit user opt-in and is public on-chain data.
 
-## Local data
+## Indexing data flow
 
-Wallet vault data, UI preferences, and local transaction notes are stored in
-browser storage. They are tied to the browser profile/device and are not
-automatically synchronized across devices. Users should maintain encrypted
-wallet backups separately.
+1. nextBTC Core provides chain and Mempool information over its private RPC interface.
+2. Index Server synchronizes blocks and transactions and maintains indexed address/UTXO data in SQLite.
+3. Wallet API serves wallet-facing endpoints.
+4. Explorer serves the bilingual browser interface and read-only browsing APIs.
+5. Background workers maintain derived statistics and cached views.
 
 ## Trust boundaries
 
-The configured Index Server is not a trusted source of private-key custody.
-It can observe address queries and signed transactions submitted for broadcast.
-Users should operate or select a server they trust and verify transaction
-details independently before signing.
+- The Core RPC interface must remain private and must not be exposed directly to the public Internet.
+- An Index Server can observe queried addresses and signed transactions submitted for broadcast. Users should operate or select a server they trust.
+- Browser wallet data is local to the browser profile/device unless explicitly backed up.
+- On-chain OP_RETURN content is public and generally irreversible.
+- Public Explorer deployments should use deliberate reverse-proxy, TLS, CORS, rate-limit and access-control settings.

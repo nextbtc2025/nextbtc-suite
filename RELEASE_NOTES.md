@@ -1,20 +1,14 @@
 # Release Notes
 
-## Wallet V0.5.83 USD Special — first public source package
+## Initial combined-source publication
 
-This public-source package is based on the V0.5.83 USD Special wallet.
+This repository brings together the nextBTC Wallet and nextBTC Index Server source trees under one MIT-licensed project.
 
-Public-release-only changes:
-- Replaced the private default Index Server address with the reserved
-  `https://your-index-server.example:8777` placeholder.
-- Removed historical private Index Server host/IP literals from the obsolete
-  endpoint migration list.
-- Preserved user-configured Index Server settings in browser storage.
-- Corrected stale source comments that incorrectly described transaction
-  signing as unimplemented.
-- Added bilingual project documentation, API compatibility notes, security
-  notes, MIT License, and the bundled QRCode.js third-party notice.
+Component versions are tracked independently:
 
-No Index Server implementation or private server configuration is included.
+- Wallet: see [`wallet/VERSION`](wallet/VERSION).
+- Index Server: see [`indexserver/VERSION`](indexserver/VERSION).
 
-- Added a subtle, persistent GitHub repository link beside the wallet version in the footer; it opens the project repository in a new tab and is localized in English/Chinese.
+The Wallet is distributed as a self-contained browser HTML application. The Index Server provides the Wallet API, Explorer web/API, SQLite indexing, Mempool integration, statistics and Windows build workflow.
+
+See the component READMEs for usage and deployment instructions. This file intentionally records repository-level scope only; component-specific changes belong in each component's changelog.

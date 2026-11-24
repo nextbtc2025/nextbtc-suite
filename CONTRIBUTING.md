@@ -2,24 +2,24 @@
 
 Thanks for your interest in nextBTC Suite.
 
-## Scope
+## Project scope
 
-The first public stage contains the nextBTC Wallet only. The Index Server
-implementation is not included yet.
+This repository contains two independently versioned components:
+
+- `wallet/` — nextBTC browser wallet.
+- `indexserver/` — nextBTC Index Server and Explorer.
+
+Please identify the affected component and version in each issue or pull request.
 
 ## Before submitting a change
 
-- Explain the user-visible behavior and security implications.
-- Keep the single-file wallet build reproducible.
-- Do not add private server URLs, API credentials, wallet data, WIFs, or test
-  secrets to commits.
-- Preserve the default behavior where local notes are not written on-chain.
-- Any OP_RETURN behavior must remain explicit opt-in and clearly disclose
-  public visibility and additional fees.
-- Test transaction construction and fee/change calculations before proposing
-  changes to the transaction engine.
+- Explain user-visible behavior and security implications.
+- Preserve Wallet / Index Server API compatibility unless a coordinated versioned change is intended.
+- Do not add private server URLs, API credentials, wallet data, WIFs, seed phrases or test secrets.
+- Keep local transaction notes local by default. Any OP_RETURN behavior must remain explicit opt-in and disclose public visibility and additional fees.
+- Do not modify nextBTC Core consensus or DWG behavior without an explicit, separately reviewed protocol change.
+- Include reproducible tests and migration notes for database or API changes.
 
 ## Pull requests
 
-Please include a concise summary, test evidence, affected wallet version, and
-any required migration or compatibility notes.
+Include a concise summary, affected component/version, test evidence, configuration changes and any required migration or compatibility notes. Remove secrets and production data from logs and fixtures.
