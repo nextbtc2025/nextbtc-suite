@@ -7,7 +7,7 @@
 
 ## Use
 
-Open `nextBTC_Wallet_V0.5.83.html` in a modern browser. Create a wallet or import an existing key, then back up the wallet before funding it.
+Open `nextBTC_Wallet.html` in a modern browser. Create a wallet or import an existing key, then back up the wallet before funding it.
 
 Configure an Index Server you operate or trust in Wallet settings. The default server address is a reserved example placeholder and is not a public service.
 
