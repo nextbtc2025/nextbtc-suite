@@ -117,7 +117,6 @@ nextbtc-suite/
 └── README.zh-CN.md
 ```
 
-Index Server 将在开发和发布审查完成后再加入仓库。
 
 ## 许可证
 
