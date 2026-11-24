@@ -73,7 +73,7 @@ Wallet API 和 Explorer 使用独立的监听配置及路由边界，同时共�
 
 ### Wallet
 
-1. 使用现代浏览器打开 `wallet/nextBTC_Wallet_V0.5.83.html`。
+1. 使用现代浏览器打开 `wallet/nextBTC_Wallet.html`。
 2. 创建钱包或导入已有私钥。
 3. 存入资金前务必完成钱包备份。
 4. 在钱包设置中填写自己部署或信任的 Index Server 地址。
