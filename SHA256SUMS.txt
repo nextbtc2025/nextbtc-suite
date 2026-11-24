@@ -1,1 +1,1 @@
-97fe7c61b379bcf0aad112cc79d9b3c2bc275e3b2e0258c3fde3875d31074c02  wallet/nextBTC_Wallet_V0.5.83_USD_Special.html
+97fe7c61b379bcf0aad112cc79d9b3c2bc275e3b2e0258c3fde3875d31074c02  wallet/nextBTC_Wallet_V0.5.83.html
