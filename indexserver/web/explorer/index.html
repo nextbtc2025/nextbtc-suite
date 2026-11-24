@@ -1,0 +1,40 @@
+<!-- Copyright (c) 2026 btcdage / nextbtc2025
+     Project: nextBTC Index Server
+     Source: https://github.com/nextbtc2025/nextbtc-suite
+     License: MIT (see LICENSE)
+-->
+
+<!doctype html>
+<html lang="zh-CN" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="/explorer/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/explorer/icon-180.png">
+  <link rel="manifest" href="/explorer/site.webmanifest">
+  <title>nextBTC Explorer</title>
+  <link rel="stylesheet" href="/explorer/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="/explorer/style.css">
+  <link rel="stylesheet" href="/explorer/details.css">
+</head>
+<body>
+  <a class="skip" href="#content">跳到主要内容</a>
+  <header class="masthead">
+    <div class="shell topbar">
+      <a class="brand" href="#/" aria-label="nextBTC Explorer 首页"><span class="brand-mark" aria-hidden="true">N</span><b>next<span>BTC</span></b><span class="product">Explorer</span></a>
+      <nav aria-label="浏览器导航"><a href="#/" data-nav="home">网络概览</a><a href="#/dwg" data-nav="dwg">DWG 分析</a><a href="#/mempool" data-nav="mempool">Mempool</a><a href="#/statistics" data-nav="statistics">高级统计</a><a href="#/blocks" data-nav="blocks">区块</a><a href="#/transactions" data-nav="transactions">交易</a><a href="#/broadcast" data-nav="broadcast">广播交易</a></nav>
+      <button id="language-toggle" class="btn btn-sm btn-outline-light language-toggle" type="button" aria-label="切换语言为英文" title="切换语言为英文">EN</button>
+      <form id="search" role="search"><span class="glass" aria-hidden="true"></span><input id="query" type="search" aria-label="搜索区块高度、哈希或地址" placeholder="搜索高度、哈希或地址" required autocomplete="off" maxlength="200"><button type="submit" aria-label="搜索">↵</button></form>
+    </div>
+    <div id="search-feedback" role="status" hidden></div>
+  </header>
+  <main id="content" class="shell" tabindex="-1"></main>
+  <footer class="shell"><span class="footer-brand">nextBTC <b>Explorer</b></span><span>数据来源 · nextBTC Core / Index Server</span><a href="https://github.com/nextbtc2025/nextbtc-suite" target="_blank" rel="noopener noreferrer" data-i18n>开源代码</a></footer>
+  <noscript>请启用 JavaScript 以查看区块链数据。</noscript>
+  <script src="/explorer/vendor/echarts.min.js"></script>
+  <script src="/explorer/vendor/qrcode.js"></script>
+  <script type="module" src="/explorer/app.js"></script>
+</body>
+</html>
+

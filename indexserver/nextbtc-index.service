@@ -1,0 +1,19 @@
+[Unit]
+Description=nextBTC Index Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nextbtcindex
+WorkingDirectory=/opt/nextbtc-index
+ExecStart=/opt/nextbtc-index/venv/bin/python /opt/nextbtc-index/server.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/nextbtc-index
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

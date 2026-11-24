@@ -1,0 +1,14 @@
+nextBTC Index Server — Third-Party Notices
+
+Project copyright: Copyright (c) 2026 btcdage / nextbtc2025.
+Project source: https://github.com/nextbtc2025/nextbtc-suite
+
+Third-party browser assets are distributed under web/explorer/vendor/.
+Please retain and consult the original license/notice files supplied there:
+- ECharts: ECHARTS-LICENSE.txt and ECHARTS-NOTICE.txt
+- Bootstrap: BOOTSTRAP-LICENSE.txt
+- QR-code library: QRCODE-LICENSE.txt
+
+The MIT license at the repository root applies to the project-owned code and
+materials to the extent owned by the project copyright holder. It does not
+relicense third-party components or assets.

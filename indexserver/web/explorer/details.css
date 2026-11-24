@@ -1,0 +1,38 @@
+/* Copyright (c) 2026 btcdage / nextbtc2025
+ * Project: nextBTC Index Server
+ * Source: https://github.com/nextbtc2025/nextbtc-suite
+ * License: MIT (see LICENSE)
+ */
+
+.details-heading {margin:0 0 1.1rem}
+.details-heading .page-title {margin-bottom:.4rem}
+.break-id {overflow-wrap:anywhere}
+.details-panel {padding:clamp(1rem,2.5vw,1.65rem);margin:1rem 0}
+.details-h2 {font-size:1.08rem;font-weight:650;margin:0 0 1rem}
+.details-stats .stat {display:grid;align-content:start;gap:.5rem;min-width:0}
+.details-stats strong {overflow-wrap:anywhere;font-size:clamp(1rem,1.55vw,1.55rem)}
+.detail-fields {display:grid;grid-template-columns:minmax(6rem,auto) 1fr;gap:.75rem 1.6rem;margin:0}
+.detail-fields dt,.detail-fields dd {margin:0;min-width:0}
+.detail-link {color:#82b9ff;text-decoration:none}
+.detail-link:hover {text-decoration:underline}
+.script-data {color:inherit;display:inline-block;max-width:min(60vw,32ch);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align:middle}
+.script-data[open] {white-space:normal;max-width:40ch}
+.detail-pager {display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:1.1rem;margin:1rem 0 0}
+.detail-pager .disabled {opacity:.4}
+.detail-flow {display:grid;gap:1rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.detail-flow .details-panel {min-width:0;margin:0}
+ .hash-link {color:inherit}
+.hash-link,.mono.identifier {white-space:normal;overflow-wrap:anywhere;vertical-align:middle}
+.amount-positive {color:#79d5a6}
+.amount-negative {color:#fa9393}
+.amount-neutral {color:#b2bccb}
+@media(max-width:700px) and (orientation:portrait){
+  .hash-link,.mono.identifier {display:inline-block;max-width:18ch;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+}
+.details-panel .table-wrap {overflow:auto}
+.details-panel .data-table td,.details-panel .data-table th {white-space:nowrap}
+.detail-empty {margin:.5rem 0}
+.address-heading {display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.address-code {width:118px;height:auto;flex-shrink:0;image-rendering:pixelated;border:1px solid white;border-radius:3px}
+@media(max-width:940px){.detail-flow{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.address-heading{align-items:flex-start}.address-code{width:86px}.detail-pager{justify-content:flex-start;gap:.6rem}.detail-fields{gap:.65rem .9rem}}
