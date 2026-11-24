@@ -9,7 +9,7 @@ at this time.
 
 - Current wallet version: **V0.5.83 USD Special**
 - License: **MIT** (see [`LICENSE`](LICENSE))
-- Wallet source: [`wallet/nextBTC_Wallet_V0.5.83_USD_Special.html`](wallet/nextBTC_Wallet_V0.5.83_USD_Special.html)
+- Wallet source: [`wallet/nextBTC_Wallet_V0.5.83.html`](wallet/nextBTC_Wallet_V0.5.83.html)
 - 中文说明: [`README.zh-CN.md`](README.zh-CN.md)
 - GitHub repository: https://github.com/nextbtc2025/nextbtc-suite
 
