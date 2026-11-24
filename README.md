@@ -12,7 +12,7 @@ Both components are maintained in this repository and have independent version n
 - Wallet version: see [`wallet/VERSION`](wallet/VERSION)
 - Index Server version: see [`indexserver/VERSION`](indexserver/VERSION)
 - Author: **btcdage**
-- Author site: [btcdage2011.github.io](https://github.com/btcdage2011/btcdage2011.github.io)
+- Author site: [btcdage2011.github.io](https://btcdage2011.github.io) / [btcdage.rf.gd](https://btcdage.rf.gd)
 - GitHub: [nextbtc2025/nextbtc-suite](https://github.com/nextbtc2025/nextbtc-suite)
 - License: [MIT](LICENSE)
 
