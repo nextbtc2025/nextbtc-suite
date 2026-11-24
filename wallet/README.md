@@ -1,8 +1,8 @@
-# nextBTC Wallet V0.5.83 USD Special
+# nextBTC Wallet V0.5.83
 
 A self-contained browser wallet for the nextBTC network.
 
-- Open `nextBTC_Wallet_V0.5.83_USD_Special.html` in a modern browser.
+- Open `nextBTC_Wallet_V0.5.83.html` in a modern browser.
 - Configure your own compatible Index Server in Settings.
 - The initial server URL is intentionally a reserved placeholder:
   `https://your-index-server.example:8777`.
