@@ -31,8 +31,7 @@ broadcasting are provided by a separately operated compatible Index Server.
 4. Private keys remain in the browser for key derivation and transaction signing.
 5. The wallet submits the signed raw transaction HEX to the configured server
    for broadcast.
-6. Optional market-price requests are made to public market-data providers only
-   when the user enables the USD valuation display.
+
 
 ## Local data
 
