@@ -7,7 +7,7 @@ Index Server 仍在继续开发，本次**不包含 Index Server 源码**。
 
 - 当前钱包版本：**V0.5.83 USD Special**
 - 项目许可证：**MIT**（见 [`LICENSE`](LICENSE)）
-- 钱包源码：[`wallet/nextBTC_Wallet_V0.5.83_USD_Special.html`](wallet/nextBTC_Wallet_V0.5.83_USD_Special.html)
+- 钱包源码：[`wallet/nextBTC_Wallet_V0.5.83.html`](wallet/nextBTC_Wallet_V0.5.83.html)
 - English: [`README.md`](README.md)
 - GitHub 仓库：https://github.com/nextbtc2025/nextbtc-suite
 
@@ -103,7 +103,7 @@ Index Server 地址；也可以修改主应用脚本中的 `INDEX_SERVER_DEFAULT
 ```text
 nextbtc-suite/
 ├── wallet/
-│   ├── nextBTC_Wallet_V0.5.83_USD_Special.html
+│   ├── nextBTC_Wallet_V0.5.83.html
 │   ├── VERSION
 │   └── README.md
 ├── docs/
