@@ -12,7 +12,7 @@ nextBTC Suite 在同一个仓库中维护两个可独立部署的组件：
 - 钱包版本：见 [`wallet/VERSION`](wallet/VERSION)
 - Index Server 版本：见 [`indexserver/VERSION`](indexserver/VERSION)
 - 作者：**btcdage**
-- 作者主页：[btcdage2011.github.io](https://btcdage2011.github.io)
+- 作者主页：[btcdage2011.github.io](https://btcdage2011.github.io)  [btcdage.rf.gd](https://btcdage.rf.gd)
 - GitHub：[nextbtc2025/nextbtc-suite](https://github.com/nextbtc2025/nextbtc-suite)
 - 开源协议：[MIT](LICENSE)
 
